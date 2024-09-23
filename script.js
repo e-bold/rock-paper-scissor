@@ -88,5 +88,4 @@ function playGame() {
 
 
 
-
-playGame();
+console.log(playGame())
