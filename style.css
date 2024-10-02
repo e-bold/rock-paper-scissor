@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+  }
+  
+  button {
+    margin: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #3e8e41;
+  }
+  
+  .banner {
+    margin: 20px auto;
+    width: 600px;
+    height: 200px;
+    border: 3px solid black;
+    padding: 20px;
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  .score-banner {
+    margin: 20px auto;
+    width: 600px;
+    height: 100px;
+    border: 3px solid black;
+    padding: 20px;
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 40px auto;
+  }
+  
+  .reset-button {
+    background-color: #ff9800;
+  }
+  
+  .reset-button:hover {
+    background-color: #e68a00;
+  }

@@ -1,12 +1,41 @@
+const body = document.querySelector("body");
+const rock = document.createElement("button");
+const paper = document.createElement("button");
+const scissors = document.createElement("button");
+const resetButton = document.createElement("button");
+const banner = document.createElement("div");
+const scoreBanner = document.createElement("div");
+
+body.append(banner)
+body.append(scoreBanner)
+body.append(rock)
+body.append(paper)
+body.append(scissors)
+body.append(resetButton)
+
+
+
+rock.textContent = 'Rock'
+paper.textContent = 'Paper'
+scissors.textContent = 'Scissors'
+resetButton.textContent = "Reset"
+
+
+banner.className = "banner";
+scoreBanner.className = "score-banner";
+resetButton.className = "reset-button";
+
+
+
 function getComputerChoice() {
   let answer = "";
   let randomNum = Math.round(Math.random() * (3 - 1) + 1);
   if (randomNum === 1) {
-    answer = "rock";
+    answer = "Rock";
   } else if (randomNum === 2) {
-    answer = "paper";
+    answer = "Paper";
   } else {
-    answer = "scissors";
+    answer = "Scissors";
   }
 
   return answer;
@@ -16,76 +45,70 @@ function getComputerChoice() {
 
 
 
-function getHumanChoice() {
-  let answer = prompt("What's your choice? Rock/Paper/Scissors");
 
-  if (
-    answer.toLowerCase() === "rock" ||
-    answer.toLowerCase() === "paper" ||
-    answer.toLowerCase() === "scissors"
+let playerScore = 0;
+let comScore = 0;
+
+
+
+function playRound(humanChoice, computerChoice) {
+  
+  let message = '';
+
+  let loseMessage =
+    "+1 Computer. " + computerChoice + " beats " + humanChoice;
+  let winMessage =
+    "+1 Player. " + humanChoice + " beats " + computerChoice;
+  let tieMessage = "It's a tie. Both chose " + humanChoice;
+
+  if (humanChoice === computerChoice) {
+    message = tieMessage;
+  } else if (
+    (humanChoice === "Rock" && computerChoice === "Scissors") ||
+    (humanChoice === "Paper" && computerChoice === "Rock") ||
+    (humanChoice === "Scissors" && computerChoice === "Paper")
   ) {
-    return answer;
+    message = winMessage;
+    playerScore ++;
+  } else {
+    message = loseMessage;
+    comScore++;
   }
 
-  return getHumanChoice();
+
+  if(humanChoice === 'Reset') {
+    message = "Scores reset"
+    playerScore = 0;
+    comScore = 0;
+  }
+
+
+  if(playerScore < 5 && comScore < 5) {
+    banner.innerHTML = message;
+    scoreBanner.innerHTML = "Player score: " +playerScore + ' Computer Score: ' + comScore;
+  } else if (playerScore === 5) {
+    scoreBanner.innerHTML =  "YOU WON";
+    banner.innerHTML = winMessage
+    playerScore =0;
+    comScore = 0;
+  } else if (comScore === 5) {
+    scoreBanner.innerHTML = "YOU LOSE";
+    banner.innerHTML = message;
+    playerScore =0;
+    comScore = 0;
+  }
+  
+
+  console.log(message);
+
 }
 
 
 
 
-function playGame() {
-  let humanScore = 0;
-  let computerScore = 0;
 
-  function playRound(humanChoice, computerChoice) {
-    humanChoice = humanChoice.toLowerCase();
+rock.addEventListener('click', () => playRound("Rock", getComputerChoice()))
+paper.addEventListener('click', () => playRound("Paper", getComputerChoice()))
+scissors.addEventListener('click', () => playRound("Scissors", getComputerChoice()))
+resetButton.addEventListener('click', () => playRound('Reset', getComputerChoice()))
 
-    let loseMessage =
-      "You lose. " + computerChoice + " beats " + humanChoice + ".";
-    let winMessage =
-      "You win. " + humanChoice + " beats " + computerChoice + ".";
-    let tieMessage = "It's a tie. Both chose " + humanChoice;
-
-    if (humanChoice === computerChoice) {
-      alert(tieMessage);
-      return "tie";
-    }
-
-    if (
-      (humanChoice === "rock" && computerChoice === "scissors") ||
-      (humanChoice === "paper" && computerChoice === "rock") ||
-      (humanChoice === "scissors" && computerChoice === "paper")
-    ) {
-      alert(winMessage);
-      return "win";
-    } else {
-      alert(loseMessage);
-      return "lose";
-    }
-  }
-
-  while (humanScore < 5 && computerScore < 5) {
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
-
-    let result = playRound(humanSelection, computerSelection);
-
-    if (result === "win") {
-      humanScore++;
-    } else if (result === "lose") {
-      computerScore++;
-    }
-
-    alert(`Current Score - Human: ${humanScore}, Computer: ${computerScore}`);
-  }
-
-  if (humanScore === 5) {
-    alert("Congratulations! You won the game!");
-  } else if (computerScore === 5) {
-    alert("Game over! The computer won the game.");
-  }
-}
-
-
-
-playGame();
